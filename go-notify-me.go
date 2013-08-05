@@ -188,10 +188,12 @@ func main() {
 		file = song["file"]
 		state = status["state"]
 
+		// build the notification string
+		returnStr = fmt.Sprintf("Artist: %s\nSong: %s\nAlbum: %s", artist, title, album)
+
 		// have a different string on different MPD statuses
 		if state == "play" {
 			statusStr = "Now Playing"
-			returnStr = fmt.Sprintf("Artist: %s\nSong: %s\nAlbum: %s", artist, title, album)
 		} else if state == "pause" {
 			statusStr = "Now Paused"
 			returnStr = fmt.Sprintf("Artist: %s\nSong: %s\nAlbum: %s", artist, title, album)
