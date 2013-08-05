@@ -191,13 +191,13 @@ func main() {
 		// have a different string on different MPD statuses
 		if state == "play" {
 			statusStr = "Now Playing"
-			returnStr = fmt.Sprintf("%s\n%s\n%s", artist, title, album)
+			returnStr = fmt.Sprintf("Artist: %s\nSong: %s\nAlbum: %s", artist, title, album)
 		} else if state == "pause" {
 			statusStr = "Now Paused"
-			returnStr = fmt.Sprintf("%s\n%s\n%s", artist, title, album)
+			returnStr = fmt.Sprintf("Artist: %s\nSong: %s\nAlbum: %s", artist, title, album)
 		} else if state == "stop" {
 			statusStr = "Stopped"
-			returnStr = fmt.Sprintf("%s\n%s\n%s", artist, title, album)
+			returnStr = fmt.Sprintf("Artist: %s\nSong: %s\nAlbum: %s", artist, title, album)
 		} else {
 			statusStr = "??"
 			returnStr = fmt.Sprintf("Unknown state")
