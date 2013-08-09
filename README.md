@@ -11,9 +11,11 @@ Dependencies
 * Go (obviously)
 * MPD (clearly...)
 * Libnotify
+
+And the Go packages:
+
 * [GoMPD](http://github.com/fhs/gompd)
 * [Go-notify](http://github.com/mqu/go-notify)
 * [Resize](http://github.com/nfnt/resize)
 
-All can be taken care of by `go get`
-
+which can be all installed by a `go get`
