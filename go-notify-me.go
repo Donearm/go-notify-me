@@ -14,13 +14,13 @@ import (
 	notify "github.com/mqu/go-notify"
 	resize "github.com/nfnt/resize"
 	"image/jpeg"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
+	"bufio"
 )
 
 // Connect to MPD server with an address and a password
@@ -38,13 +38,15 @@ func getMusicDirectory() string {
 	//TODO: make this read file up until the matched line perhaps?
 	var dir string
 	var rxp = regexp.MustCompile(`^music_directory.*`)
-	file, err := ioutil.ReadFile("/etc/mpd.conf")
+	file, err := os.Open("/etc/mpd.conf")
 	if err != nil {
 		fmt.Println("Couldn't read MPD configuration, exiting...")
 		os.Exit(2)
 	}
-	lines := strings.Split(string(file), "\n")
-	for _, l := range lines {
+	defer file.Close()
+	s := bufio.NewScanner(file)
+	for s.Scan() {
+		l := strings.Trim(s.Text(), " ")
 		matched := rxp.MatchString(l)
 		if matched {
 			// Split the music_directory line on ", get the second item
