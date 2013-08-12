@@ -6,6 +6,10 @@
 *
  */
 
+/* TODO: this uses a lot of cpu after it's been running for a couple of 
+* hours, find out why
+*/
+
 package main
 
 import (
