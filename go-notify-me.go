@@ -217,7 +217,11 @@ func main() {
 			coverSplit := strings.Split(file, "/")
 			fileDirName := coverSplit[:len(coverSplit)-1]
 			coverImg = coverSearch(filepath.Join(musicDir, strings.Join(fileDirName, "/")))
-			thumbImage = resizeImage(coverImg, 80, 0)
+			if coverImg != "" {
+				thumbImage = resizeImage(coverImg, 80, 0)
+			} else {
+				thumbImage = ""
+			}
 		}
 
 		// if id of song or status changed, emit the notification
