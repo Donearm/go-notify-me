@@ -6,10 +6,6 @@
 *
  */
 
-/* TODO: this uses a lot of cpu after it's been running for a couple of 
-* hours, find out why
-*/
-
 package main
 
 import (
@@ -211,23 +207,22 @@ func main() {
 			returnStr = fmt.Sprintf("Unknown state")
 		}
 
-		// check that we have a filename for the current song and use it
-		// to find the cover art for its album
-		if file != "" {
-			coverSplit := strings.Split(file, "/")
-			fileDirName := coverSplit[:len(coverSplit)-1]
-			coverImg = coverSearch(filepath.Join(musicDir, strings.Join(fileDirName, "/")))
-			if coverImg != "" {
-				thumbImage = resizeImage(coverImg, 80, 0)
-			} else {
-				thumbImage = ""
-			}
-		}
-
 		// if id of song or status changed, emit the notification
 		if songId != originalId || originalStatus != state {
 			originalId = songId
 			originalStatus = state
+			// check that we have a filename for the current song and use it
+			// to find the cover art for its album
+			if file != "" {
+				coverSplit := strings.Split(file, "/")
+				fileDirName := coverSplit[:len(coverSplit)-1]
+				coverImg = coverSearch(filepath.Join(musicDir, strings.Join(fileDirName, "/")))
+				if coverImg != "" {
+					thumbImage = resizeImage(coverImg, 80, 0)
+				} else {
+					thumbImage = ""
+				}
+			}
 			launchNotification(statusStr, returnStr, thumbImage, 3000)
 		} else {
 			// sleep a couple of sec and then retry
