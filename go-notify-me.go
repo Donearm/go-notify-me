@@ -60,7 +60,7 @@ func getMusicDirectory() string {
 // Search for a matching image in currently playing song's directory to
 // use as album cover
 func coverSearch(path string) string {
-	var patterns = []string{`.*[Ff]ront.*`, `.*[Ff]older.*`, `.*[Aa]lbumart.*`, `.*[Cc]over.*`, `.*[Tt]humb.*`}
+	var patterns = []string{`.*[Ff]ront.*`, `.*[Ff]older.*`, `.*[Aa]lbumart.*`, `.*[Cc]over.*`, `.*[Tt]humb.*`, `.*[Ff]older.*`}
 
 	dir, err := os.Open(path)
 	if err != nil {
