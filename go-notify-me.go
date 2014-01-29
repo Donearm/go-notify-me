@@ -150,15 +150,17 @@ func resizeImage(image string, width, height uint) string {
 
 func main() {
 	var originalId = 657932 // starting Id. An absurdly high number just
-	// to be sure it's not the same as songID
+							// to be sure it's not the same as songID
+
 	var originalStatus = ""                      // starting MPD's status
 	var songId int                               // Id of the current song
 	var musicDir string                          // path of MPD music database
-	var coverImg string                          // path of the image of the current song's album cover
+	var coverImg string                          // path of the image of 
+												 // the current song's album cover
 	var thumbImage string                        // path of the thumbnail of coverImg
 	var artist, title, album, file, state string // metadata info
 	var statusStr string                         // string containing the status message
-	// according to MPD's status
+												 // according to MPD's status
 	var returnStr string // returning string to output alongside the cover
 
 	c := connectToServer("127.0.0.1:6600", "")
