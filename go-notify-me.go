@@ -35,7 +35,6 @@ func connectToServer(addr, pwd string) (cli *mpd.Client) {
 
 // Extract the path to the music_directory in MPD configuration
 func getMusicDirectory() string {
-	//TODO: make this read file up until the matched line perhaps?
 	var dir string
 	var rxp = regexp.MustCompile(`^music_directory.*`)
 	file, err := os.Open("/etc/mpd.conf")
