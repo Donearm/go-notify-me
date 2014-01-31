@@ -224,6 +224,8 @@ func main() {
 		} else {
 			statusStr = "??"
 			returnStr = fmt.Sprintf("Unknown state")
+			// TODO: how to stop and restart the for loop when MPD comes 
+			// down while go-notify-me is running?
 		}
 
 		// if id of song or status changed, emit the notification
