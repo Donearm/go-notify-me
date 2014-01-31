@@ -166,6 +166,7 @@ func resizeImage(image string, width, height uint) string {
 }
 
 func main() {
+	var address = "127.0.0.1:6600"				// MPD server address
 	var originalId = 657932 // starting Id. An absurdly high number just
 							// to be sure it's not the same as songID
 
@@ -180,7 +181,7 @@ func main() {
 												 // according to MPD's status
 	var returnStr string // returning string to output alongside the cover
 
-	c := connectToServer("127.0.0.1:6600", "")
+	c := connectToServer(address, "")
 
 	defer c.Close()
 
