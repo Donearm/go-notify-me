@@ -21,16 +21,33 @@ import (
 	"strings"
 	"time"
 	"bufio"
+	"net"
 )
 
 // Connect to MPD server with an address and a password
 func connectToServer(addr, pwd string) (cli *mpd.Client) {
+	// first make sure that MPD server is running
+	for s := checkMpdIsListening(addr); s != true; s = checkMpdIsListening(addr) {
+		fmt.Println("Waiting for the MPD server to go up...")
+		time.Sleep(10 * time.Second)
+	}
 	cli, err := mpd.DialAuthenticated("tcp", addr, pwd)
 	if err != nil {
 		fmt.Println("Couldn't connect to MPD server")
 		os.Exit(2)
 	}
 	return cli
+}
+
+// Check if the MPD server is ready (=listening)
+func checkMpdIsListening(addr string) bool {
+	conn, err := net.DialTimeout("tcp", addr, 1 * time.Second)
+	if err != nil {
+		return false
+	}
+	defer conn.Close()
+
+	return true
 }
 
 // Extract the path to the music_directory in MPD configuration
