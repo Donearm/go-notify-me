@@ -9,19 +9,19 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	mpd "github.com/fhs/gompd/mpd"
 	notify "github.com/mqu/go-notify"
 	resize "github.com/nfnt/resize"
 	"image/jpeg"
+	"net"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
-	"bufio"
-	"net"
 )
 
 // Connect to MPD server with an address and a password
@@ -41,7 +41,7 @@ func connectToServer(addr, pwd string) (cli *mpd.Client) {
 
 // Check if the MPD server is ready (=listening)
 func checkMpdIsListening(addr string) bool {
-	conn, err := net.DialTimeout("tcp", addr, 1 * time.Second)
+	conn, err := net.DialTimeout("tcp", addr, 1*time.Second)
 	if err != nil {
 		return false
 	}
@@ -166,19 +166,19 @@ func resizeImage(image string, width, height uint) string {
 }
 
 func main() {
-	var address = "127.0.0.1:6600"				// MPD server address
-	var originalId = 657932 // starting Id. An absurdly high number just
-							// to be sure it's not the same as songID
+	var address = "127.0.0.1:6600"		// MPD server address
+	var originalId = 657932				// starting Id. An absurdly high number just
+	// to be sure it's not the same as songID
 
-	var originalStatus = ""                      // starting MPD's status
-	var songId int                               // Id of the current song
-	var musicDir string                          // path of MPD music database
-	var coverImg string                          // path of the image of 
-												 // the current song's album cover
+	var originalStatus = ""             // starting MPD's status
+	var songId int                      // Id of the current song
+	var musicDir string                 // path of MPD music database
+	var coverImg string                 // path of the image of the
+	// the current song's album cover
 	var thumbImage string                        // path of the thumbnail of coverImg
 	var artist, title, album, file, state string // metadata info
 	var statusStr string                         // string containing the status message
-												 // according to MPD's status
+	// according to MPD's status
 	var returnStr string // returning string to output alongside the cover
 
 	c := connectToServer(address, "")
@@ -224,7 +224,7 @@ func main() {
 		} else {
 			statusStr = "??"
 			returnStr = fmt.Sprintf("Unknown state")
-			// TODO: how to stop and restart the for loop when MPD comes 
+			// TODO: how to stop and restart the for loop when MPD comes
 			// down while go-notify-me is running?
 		}
 
