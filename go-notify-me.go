@@ -85,8 +85,8 @@ func coverSearch(path string) string {
 	}
 	defer dir.Close()
 
-	files, r_err := dir.Readdir(0)
-	if r_err != nil {
+	files, rErr := dir.Readdir(0)
+	if rErr != nil {
 		fmt.Println("Couldn't browse the path of the current song")
 		os.Exit(2)
 	}
@@ -137,41 +137,41 @@ func resizeImage(image string, width, height uint) string {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Couldn't open the coverart file\n")
 		return ""
-	} else {
-		img, err := jpeg.Decode(file)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Couldn't decode image to a compatible format\n")
-			return ""
-		}
-
-		file.Close()
-
-		// resize
-		thumb := resize.Resize(width, height, img, resize.NearestNeighbor)
-
-		// create the thumbnail file
-		tmpfile, err := os.Create(thumbName)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error creating the thumbnails\n")
-			return ""
-		}
-
-		defer tmpfile.Close()
-
-		// write image to the thumbnail temporary file
-		jpeg.Encode(tmpfile, thumb, nil)
-
-		return tmpfile.Name()
 	}
+
+	img, err := jpeg.Decode(file)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Couldn't decode image to a compatible format\n")
+		return ""
+	}
+
+	file.Close()
+
+	// resize
+	thumb := resize.Resize(width, height, img, resize.NearestNeighbor)
+
+	// create the thumbnail file
+	tmpfile, err := os.Create(thumbName)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error creating the thumbnails\n")
+		return ""
+	}
+
+	defer tmpfile.Close()
+
+	// write image to the thumbnail temporary file
+	jpeg.Encode(tmpfile, thumb, nil)
+
+	return tmpfile.Name()
 }
 
 func main() {
 	var address = "127.0.0.1:6600"		// MPD server address
-	var originalId = 657932				// starting Id. An absurdly high number just
+	var originalID = 657932				// starting Id. An absurdly high number just
 	// to be sure it's not the same as songID
 
 	var originalStatus = ""             // starting MPD's status
-	var songId int                      // Id of the current song
+	var songID int                      // Id of the current song
 	var musicDir string                 // path of MPD music database
 	var coverImg string                 // path of the image of the
 	// the current song's album cover
@@ -202,7 +202,7 @@ func main() {
 			time.Sleep(30 * time.Second)
 		}
 
-		songId, _ = strconv.Atoi(song["Id"]) // convert string to int
+		songID, _ = strconv.Atoi(song["Id"]) // convert string to int
 		artist = song["Artist"]
 		title = song["Title"]
 		album = song["Album"]
@@ -229,8 +229,8 @@ func main() {
 		}
 
 		// if id of song or status changed, emit the notification
-		if songId != originalId || originalStatus != state {
-			originalId = songId
+		if songID != originalID || originalStatus != state {
+			originalID = songID
 			originalStatus = state
 			// check that we have a filename for the current song and use it
 			// to find the cover art for its album
