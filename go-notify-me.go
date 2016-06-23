@@ -24,7 +24,8 @@ import (
 	"time"
 )
 
-// Connect to MPD server with an address and a password
+// connectToServer connects to a MPD server
+// address to the server and its password are required
 func connectToServer(addr, pwd string) (cli *mpd.Client) {
 	// first make sure that MPD server is running
 	for s := checkMpdIsListening(addr); s != true; s = checkMpdIsListening(addr) {
@@ -39,7 +40,8 @@ func connectToServer(addr, pwd string) (cli *mpd.Client) {
 	return cli
 }
 
-// Check if the MPD server is ready (=listening)
+// checkMpdIsListening checks if the MPD server is ready (is listening for 
+// connections)
 func checkMpdIsListening(addr string) bool {
 	conn, err := net.DialTimeout("tcp", addr, 1*time.Second)
 	if err != nil {
@@ -50,7 +52,8 @@ func checkMpdIsListening(addr string) bool {
 	return true
 }
 
-// Extract the path to the music_directory in MPD configuration
+// getMusicDirectory obtains the path to the music directory from local's MPD 
+// configuration file
 func getMusicDirectory() string {
 	var dir string
 	var rxp = regexp.MustCompile(`^music_directory.*`)
@@ -73,8 +76,8 @@ func getMusicDirectory() string {
 	return dir
 }
 
-// Search for a matching image in currently playing song's directory to
-// use as album cover
+// coverSearch looks for a matching image for the currently playing song in the 
+// directory of the album to use as the album's cover
 func coverSearch(path string) string {
 	var patterns = []string{`.*[Ff]ront.*`, `.*[Ff]older.*`, `.*[Aa]lbumart.*`, `.*[Cc]over.*`, `.*[Tt]humb.*`, `.*[Ff]older.*`}
 
@@ -103,8 +106,8 @@ func coverSearch(path string) string {
 	return ""
 }
 
-// Launch a notification with song's metadata and a album cover
-// thumbnail
+// launchNotification shows a desktop notification with song's metatada and an 
+// album cover's thumbnail
 func launchNotification(name, txt, image string, delay int32) {
 	notify.Init(name)
 
@@ -127,7 +130,7 @@ func launchNotification(name, txt, image string, delay int32) {
 	notify.UnInit()
 }
 
-// Resize an image to an arbitrary widthXheight, saving it in a
+// resizeImage resizes an image to an arbitrary widthXheight and saves it to a 
 // temporary file
 func resizeImage(image string, width, height uint) string {
 	// thumbnail path and name
