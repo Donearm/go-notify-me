@@ -2,7 +2,7 @@
 *
 * MPD notification status script
 *
-* © 2013-2015, Gianluca Fiore
+* © 2013-2020, Gianluca Fiore
 *
  */
 
